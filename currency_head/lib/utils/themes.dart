@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'common.dart';
 
 /// primary and stroke (accent ?) color of the app *****************************
-const PRIMARY_COLOR = Colors.blue, STROKE_COLOR = Color(0xffFFFFFF);
+const PRIMARY_COLOR = Color(0xffd4af37), STROKE_COLOR = Color(0xffFFFFFF);
 
 /// ****************************************************************************
 
