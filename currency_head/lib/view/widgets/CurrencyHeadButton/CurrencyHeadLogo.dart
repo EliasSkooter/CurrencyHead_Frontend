@@ -428,7 +428,7 @@ class CurrencyHeadTitle extends StatelessWidget {
   CurrencyHeadTitle(
       {Key? key,
       this.height = 20,
-      this.color = PRIMARY_COLOR,
+      this.color = Colors.black,
       this.showText = true,
       this.offset1 = const Color(0xFFBA68C8),
       this.offset2 = const Color(0xFF4A148C)})

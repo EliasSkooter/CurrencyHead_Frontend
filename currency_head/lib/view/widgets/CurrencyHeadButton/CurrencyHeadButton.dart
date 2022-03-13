@@ -31,7 +31,7 @@ class CurrencyHeadButton extends StatefulWidget {
   // ...therefore each time the button is called as a normal button strokeHoverColor has to be...
   // ...set to Colors.white
   CurrencyHeadButton(
-      {this.size = const Size(45, 100),
+      {this.size = const Size(400, 50),
       this.opacity = 1.0,
       this.color = PRIMARY_COLOR,
       this.strokeColor = PRIMARY_COLOR,

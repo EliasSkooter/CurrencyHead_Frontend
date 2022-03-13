@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Currency Head',
         theme: defaultTheme(context),
         home: Stack(children: [HomeScreen()]),
