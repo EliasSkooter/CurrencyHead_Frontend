@@ -18,13 +18,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  dynamic username;
-  dynamic password;
+  String username = "";
+  String password = "";
   bool isPasswordCorrect = true;
   bool isLoading = false;
   bool isPasswordAccepted = true;
 
   void loginFunct(username, password) async {
+    print("hehe");
     login(username, password).then((res) {
       if (res) {
         print("login successful... redirecting to dashboard");
