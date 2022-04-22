@@ -171,9 +171,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(10)),
                               ),
                               onChanged: (value) {
+                                setState(() {
+                                  password = value;
+                                });
                                 if (isPasswordValid(value)) {
                                   setState(() {
-                                    password = value;
                                     isPasswordAccepted = true;
                                   });
                                 } else {
@@ -210,9 +212,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isLoading = true;
                             });
-                            if (isPasswordAccepted) {
-                              loginFunct(username, password);
-                            }
+                            // if (isPasswordAccepted) {
+                            loginFunct(username, password);
+                            // }
                           },
                           size: Size(350, 50),
                         ),
