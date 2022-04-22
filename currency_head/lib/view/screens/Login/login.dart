@@ -159,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
                             height: isMobileDevice() ? 50 : null,
                             child: TextFormField(
+                              obscureText: true,
                               initialValue: password,
                               cursorColor: Colors.black,
                               cursorWidth: 1,
