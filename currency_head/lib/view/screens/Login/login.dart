@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
+import 'package:currency_head/services/loginService.dart';
 import 'package:currency_head/utils/common.dart';
 import 'package:currency_head/utils/themes.dart';
+import 'package:currency_head/utils/validation.dart';
 import 'package:currency_head/view/widgets/CircularFrame/CircularFrame.dart';
 import 'package:currency_head/view/widgets/CurrencyHeadButton/CurrencyHeadButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +20,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   dynamic username;
   dynamic password;
+  bool isPasswordCorrect = true;
+  bool isLoading = false;
+  bool isPasswordAccepted = true;
+
+  void loginFunct(username, password) async {
+    login(username, password).then((res) {
+      if (res) {
+        print("login successful... redirecting to dashboard");
+        Get.toNamed('/Dashboard');
+      } else {
+        print("login failed.");
+        setState(() {
+          isPasswordCorrect = false;
+          isLoading = false;
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -28,6 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          Positioned(
+              top: .1.sh,
+              right: .1.sw,
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Get.back();
+                },
+              )),
           Positioned(
             top: -.1.sw,
             left: -.2.sw,
@@ -56,11 +86,20 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
           Positioned(
             left: isMobileDevice() ? null : 1.sw / 2,
-            top: isMobileDevice() ? 1.sh / 2.5 : 1.sh / 2,
+            top: isMobileDevice() ? 1.sh / 2.5 : 1.sh / 2.5,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // invalid password control
+                  if (!isPasswordCorrect)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "Incorrect email or password!",
+                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      ),
+                    ),
                   Container(
                     width: isMobileDevice() ? 1.sw : null,
                     margin: EdgeInsets.only(bottom: 20),
@@ -99,58 +138,107 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: isMobileDevice()
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Password: ',
-                        style: presetTextThemes(context).headline6?.copyWith(
-                            fontSize: 16, color: Colors.grey.shade800),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                        height: isMobileDevice() ? 50 : null,
-                        child: TextFormField(
-                          initialValue: password,
-                          cursorColor: Colors.black,
-                          cursorWidth: 1,
-                          style: TextStyle(fontSize: 16),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xFFBEBEBE)),
-                                borderRadius: BorderRadius.circular(10)),
+                      Row(
+                        mainAxisAlignment: isMobileDevice()
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Password: ',
+                            style: presetTextThemes(context)
+                                .headline6
+                                ?.copyWith(
+                                    fontSize: 16, color: Colors.grey.shade800),
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              password = value;
-                            });
-                          },
-                        ),
+                          Container(
+                            alignment: Alignment.center,
+                            width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
+                            height: isMobileDevice() ? 50 : null,
+                            child: TextFormField(
+                              initialValue: password,
+                              cursorColor: Colors.black,
+                              cursorWidth: 1,
+                              style: TextStyle(fontSize: 16),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: isPasswordAccepted
+                                            ? Color(0xFFBEBEBE)
+                                            : Colors.red),
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              onChanged: (value) {
+                                if (isPasswordValid(value)) {
+                                  setState(() {
+                                    password = value;
+                                    isPasswordAccepted = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    isPasswordAccepted = false;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
+                      // if (!isPasswordAccepted)
+                      //   Container(
+                      //     width: 350,
+                      //     margin: EdgeInsets.only(bottom: 10, left: 100),
+                      //     child: Text(
+                      //       "Password must contain at least 8 characterd, 1 capital, 1 number, 1 special",
+                      //       softWrap: true,
+                      //       style: TextStyle(color: Colors.red, fontSize: 15),
+                      //     ),
+                      //   ),
                     ],
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 20),
-                  //   child: CustomButton(
-                  //     color: Colors.red,
-                  //     onTapCallBack: () {
-                  //       Get.toNamed('/SignUp');
-                  //     },
-                  //     title: 'Sign in',
-                  //   ),
-                  // ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 20, left: 70),
+                        child: CurrencyHeadButton(
+                          text: 'Login',
+                          function: () {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            if (isPasswordAccepted) {
+                              loginFunct(username, password);
+                            }
+                          },
+                          size: Size(350, 50),
+                        ),
+                      ),
+                      //isLoading
+                      if (isLoading)
+                        Center(
+                            child: Container(
+                          margin: EdgeInsets.only(top: 20),
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF707070)),
+                            strokeWidth: 2.5,
+                          ),
+                        ))
+                    ],
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 20),
-                    child: CurrencyHeadButton(
-                      text: 'Login',
-                      function: () {
-                        print("object");
+                    child: TextButton(
+                      child: Text("Not a member yet? Register here!"),
+                      onPressed: () {
+                        Get.toNamed('/SignUp');
                       },
-                      size: Size(250, 50),
                     ),
                   )
                 ]),

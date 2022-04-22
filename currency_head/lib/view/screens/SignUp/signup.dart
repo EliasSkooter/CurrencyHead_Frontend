@@ -1,3 +1,4 @@
+import 'package:currency_head/view/widgets/AppBar/appBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,11 +20,6 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        child: Text("This is sign up screen"),
-      ),
-    );
+    return Scaffold(appBar: const CustomAppBar(), body: Column());
   }
 }
