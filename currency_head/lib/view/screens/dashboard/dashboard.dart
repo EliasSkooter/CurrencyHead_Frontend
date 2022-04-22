@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:currency_head/view/widgets/AppBar/appBar.dart';
 import 'package:currency_head/view/widgets/Sidebar/SidebarMenu.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
 

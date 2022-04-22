@@ -47,11 +47,11 @@ class CircularFrame extends StatelessWidget {
       this.child,
       this.showBadge = false,
       this.badge})
-      : this.imageSrc = '',
-        this.text = '',
-        this.textStyle = TextStyle(),
-        this.imageFit = null,
-        this._type = 'default',
+      : imageSrc = '',
+        text = '',
+        textStyle = TextStyle(),
+        imageFit = null,
+        _type = 'default',
         super(key: key);
 
   // image from url constructor
@@ -66,10 +66,10 @@ class CircularFrame extends StatelessWidget {
       required this.imageSrc,
       this.showBadge = false,
       this.badge})
-      : this.text = '',
-        this.textStyle = TextStyle(),
-        this.child = null,
-        this._type = 'image-from-url',
+      : text = '',
+        textStyle = TextStyle(),
+        child = null,
+        _type = 'image-from-url',
         super(key: key);
 
   // image from url constructor
@@ -84,15 +84,15 @@ class CircularFrame extends StatelessWidget {
       required this.imageSrc,
       this.showBadge = false,
       this.badge})
-      : this.text = '',
-        this.textStyle = TextStyle(),
-        this.child = null,
-        this._type = 'image-asset',
+      : text = '',
+        textStyle = TextStyle(),
+        child = null,
+        _type = 'image-asset',
         super(key: key);
 
   // text constructor
   // has text and textStyle but no image with _type 'text'
-  CircularFrame.text(
+  const CircularFrame.text(
       {Key? key,
       this.backgroundColor = Colors.white,
       this.borderColor = PRIMARY_COLOR,
@@ -108,9 +108,9 @@ class CircularFrame extends StatelessWidget {
       required this.text,
       this.showBadge = false,
       this.badge})
-      : this.imageSrc = '',
-        this.child = null,
-        this._type = 'text',
+      : imageSrc = '',
+        child = null,
+        _type = 'text',
         super(key: key);
 
   // function that returns a generic circle container
@@ -118,8 +118,8 @@ class CircularFrame extends StatelessWidget {
   // has tiny randomized translation (position)
   Center _genericContainer(double saturation, double lightness) {
     // translation is based on a multiple of borderWidth for consistency
-    int x = new Random().nextInt(borderWidth.toInt() * 4),
-        y = new Random().nextInt(borderWidth.toInt() * 4);
+    int x = Random().nextInt(borderWidth.toInt() * 4),
+        y = Random().nextInt(borderWidth.toInt() * 4);
 
     // width and height of container are the same because prefect circles.
     // circles should be transparent on the inside to show the base frame
@@ -278,7 +278,7 @@ class CircularFrame extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext buildContext) {
+  Widget build(BuildContext context) {
     return Stack(children: _stack()); // renders stack
   }
 }

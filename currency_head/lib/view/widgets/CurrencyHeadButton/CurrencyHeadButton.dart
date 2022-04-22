@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:currency_head/utils/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -30,7 +29,7 @@ class CurrencyHeadButton extends StatefulWidget {
   // ...- for convenience's sake -...
   // ...therefore each time the button is called as a normal button strokeHoverColor has to be...
   // ...set to Colors.white
-  CurrencyHeadButton(
+  const CurrencyHeadButton(
       {this.size = const Size(400, 50),
       this.opacity = 1.0,
       this.color = PRIMARY_COLOR,
@@ -48,7 +47,7 @@ class CurrencyHeadButton extends StatefulWidget {
       this.isHoveredOver = false,
       required this.function,
       Key? key})
-      : super();
+      : super(key: key);
 
   // creating state
   @override
@@ -232,7 +231,7 @@ class CurrencyHeadButtonPainter extends CustomPainter {
     // drawing button path first
     if (isHoveredOver) {
       Paint strokeHoverPaint = logoPaintStroke;
-      strokeHoverPaint..color = strokeHoverColor;
+      strokeHoverPaint.color = strokeHoverColor;
       canvas.drawPath(path, logoPaint);
       canvas.drawPath(path, strokeHoverPaint);
     } else {
@@ -284,7 +283,8 @@ class CurrencyHeadRoundButton extends StatefulWidget {
   /// [size] is the size of the button (both width and height)
   /// [onPressed] is the function to be executed when the button is pressed
 
-  CurrencyHeadRoundButton({
+  const CurrencyHeadRoundButton({
+    Key? key,
     this.duration = 200,
     this.size = 200,
     required this.onPressed,

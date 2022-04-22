@@ -1,10 +1,6 @@
-import 'dart:ui';
-
 import 'package:currency_head/utils/common.dart';
 import 'package:currency_head/utils/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///This CustomButtom class is a widget to create a custom button that can be under 2 format, with a pre title icon and without a pre title icon:
@@ -33,20 +29,20 @@ class CustomButton extends StatelessWidget {
     this.color = PRIMARY_COLOR,
     required this.onTapCallBack,
     // this.size = const Size(170, 40),
-  })  : this.preIcon = Icon(Icons.add),
-        this._buttonType = 'default',
+  })  : preIcon = Icon(Icons.add),
+        _buttonType = 'default',
         super(key: key);
 
   ///preIcon constructor (For the second button format)
   ///has the icon path with _cardType = 'preIcon'
-  CustomButton.preIcon({
+  const CustomButton.preIcon({
     Key? key,
     this.title = 'Buttonnnn',
     this.color = PRIMARY_COLOR,
     required this.preIcon,
     // this.size = const Size(170, 40),
     required this.onTapCallBack,
-  })  : this._buttonType = 'preIcon',
+  })  : _buttonType = 'preIcon',
         super(key: key);
 
   //The build function that return the button

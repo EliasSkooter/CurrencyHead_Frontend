@@ -1,5 +1,4 @@
 import 'package:currency_head/utils/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
@@ -373,7 +372,7 @@ class CurrencyHeadLogoPainter extends CustomPainter {
       this.strokeWidth = 1.0,
       this.offset1 = const Color(0xFFBA68C8),
       this.offset2 = const Color(0xFF4A148C)})
-      : this.withHeight = false,
+      : withHeight = false,
         super();
 
   CurrencyHeadLogoPainter.withHeight(
@@ -383,12 +382,12 @@ class CurrencyHeadLogoPainter extends CustomPainter {
       this.strokeWidth = 1.0,
       this.offset1 = const Color(0xFFBA68C8),
       this.offset2 = const Color(0xFF4A148C)})
-      : this.withHeight = true,
+      : withHeight = true,
         super();
 
   @override
   void paint(Canvas canvas, Size size) {
-    CurrencyHeadLogo logo = this.withHeight
+    CurrencyHeadLogo logo = withHeight
         ? CurrencyHeadLogo.widthHeight(
             size: size.height,
             color: color,
@@ -425,7 +424,7 @@ class CurrencyHeadTitle extends StatelessWidget {
   final Color offset1;
   final Color offset2;
 
-  CurrencyHeadTitle(
+  const CurrencyHeadTitle(
       {Key? key,
       this.height = 20,
       this.color = Colors.black,

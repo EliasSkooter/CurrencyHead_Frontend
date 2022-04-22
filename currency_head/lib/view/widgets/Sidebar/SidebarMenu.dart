@@ -17,7 +17,7 @@ class SideBar extends StatefulWidget {
   /// WHEN USING SIDEBAR MAKE SURE TO INCLUDE: handlerForManageContent: (useless) {},
   ///
   /// Otherwise you will get a null error or an argument error!
-  SideBar({
+  const SideBar({
     Key? key,
     required this.handlerForManageContent,
     this.controller,
