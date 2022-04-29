@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordCorrect = true;
   bool isLoading = false;
   bool isPasswordAccepted = true;
+  bool isPasswordHidden = true;
 
   void loginFunct(username, password) async {
     print("hehe");
@@ -124,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             cursorWidth: 1,
                             style: TextStyle(fontSize: 16),
                             decoration: InputDecoration(
+                              hintText: "username",
                               border: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Color(0xFFBEBEBE)),
@@ -159,18 +161,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
                             height: isMobileDevice() ? 50 : null,
                             child: TextFormField(
-                              obscureText: true,
+                              obscureText: isPasswordHidden,
                               initialValue: password,
                               cursorColor: Colors.black,
                               cursorWidth: 1,
                               style: TextStyle(fontSize: 16),
                               decoration: InputDecoration(
+                                hintText: "password",
                                 border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: isPasswordAccepted
-                                            ? Color(0xFFBEBEBE)
-                                            : Colors.red),
-                                    borderRadius: BorderRadius.circular(10)),
+                                  borderSide: BorderSide(
+                                    color: isPasswordAccepted
+                                        ? Color(0xFFBEBEBE)
+                                        : Colors.red,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: isPasswordHidden
+                                      ? Icon(Icons.remove_red_eye)
+                                      : Icon(Icons.visibility_off_outlined),
+                                  onPressed: () {
+                                    setState(() {
+                                      isPasswordHidden = !isPasswordHidden;
+                                    });
+                                  },
+                                ),
                               ),
                               onChanged: (value) {
                                 setState(() {

@@ -1,8 +1,13 @@
 // ignore_for_file: camel_case_types
 
+import 'package:currency_head/domain/controllers/currencyController.dart';
+import 'package:currency_head/domain/models/handleTableCurrency.dart';
 import 'package:currency_head/view/widgets/AppBar/appBar.dart';
 import 'package:currency_head/view/widgets/Sidebar/SidebarMenu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -12,6 +17,181 @@ class Dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<Dashboard> {
+  List<dynamic> _filteredData = [];
+
+  String filterValue = "";
+
+  List<dynamic> _data = [];
+
+  //This variable is for the default sortable column to show the arrow on
+  int _currentSortColumn = 0;
+
+  //This variable is for the sort order
+  bool _isAscending = true;
+
+  //This variable is an instance of the HandleTableNewUsers class
+  HandleTableCurrency dataObject =
+      HandleTableCurrency(data: [], callback: () {});
+
+  CurrencyController controller =
+      Get.put(CurrencyController()..fetchCurrencies());
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  void fetchData() {
+    print("innn fetching data");
+    controller.fetchCurrencies().then((value) {
+      setState(() {
+        _data = value;
+        _filteredData = value;
+      });
+      dataObject = HandleTableCurrency(
+        data: _filteredData,
+        callback: fetchData,
+      );
+      print("dataaa ==> $_filteredData");
+    });
+  }
+
+  // list of columns for the table
+  List<DataColumn> getColumns() {
+    List<DataColumn> columns = [
+      //Name column
+      DataColumn(
+        label: Container(
+          width: 150,
+          alignment: Alignment.center,
+          child: Text(
+            'Name',
+          ),
+        ),
+        onSort: (columnIndex, _) {
+          setState(
+            () {
+              _currentSortColumn = columnIndex;
+              if (_isAscending == true) {
+                _isAscending = false;
+                // sort the _requestContactData list in Ascending, order by email
+                _filteredData.sort((productA, productB) {
+                  if (productA['name'] != null && productB['name'] != null) {
+                    return productB['name'].compareTo(productA['name']);
+                  }
+                  return 0;
+                });
+              } else {
+                _isAscending = true;
+                // sort the _requestContactData list in Ascending, order by email
+                _filteredData.sort((productA, productB) {
+                  if (productA['name'] != null && productB['name'] != null) {
+                    return productA['name'].compareTo(productB['name']);
+                  }
+                  return 0;
+                });
+              }
+              dataObject =
+                  HandleTableCurrency(data: _filteredData, callback: fetchData);
+            },
+          );
+        },
+      ),
+
+      //Value column
+      DataColumn(
+        label: Container(
+          width: 150,
+          alignment: Alignment.center,
+          child: Text(
+            'value',
+          ),
+        ),
+        onSort: (columnIndex, _) {
+          setState(
+            () {
+              _currentSortColumn = columnIndex;
+              if (_isAscending == true) {
+                _isAscending = false;
+                // sort the _requestContactData list in Ascending, order by email
+                _filteredData.sort((productA, productB) =>
+                    productB['value'].compareTo(productA['value']));
+              } else {
+                _isAscending = true;
+                // sort the _requestContactData list in Ascending, order by email
+                _filteredData.sort((productA, productB) =>
+                    productA['value'].compareTo(productB['value']));
+              }
+              dataObject =
+                  HandleTableCurrency(data: _filteredData, callback: fetchData);
+            },
+          );
+        },
+      ),
+
+      //Last Update date column
+      DataColumn(
+        label: Container(
+          width: 150,
+          alignment: Alignment.center,
+          child: Text(
+            "Last Update Date",
+          ),
+        ),
+        onSort: (columnIndex, _) {
+          print("no sorting available :)");
+          // setState(
+          //   () {
+          //     _currentSortColumn = columnIndex;
+          //     if (_isAscending == true) {
+          //       _isAscending = false;
+          //       // sort the _requestContactData list in Ascending, order by RequestDate
+          //       _filteredData.sort((d1, d2) {
+          //         if (d1['updateDate'] == "" || d2['updateDate'] == "") {
+          //           return 0;
+          //         } else {
+          //           DateFormat format = DateFormat("dd/MM/yyy");
+          //           DateTime date1 = format.parse(d1['updateDate']);
+          //           DateTime date2 = format.parse(d2['updateDate']);
+          //           return date1.compareTo(date2);
+          //         }
+          //       });
+          //     } else {
+          //       _isAscending = true;
+          //       // sort the _requestContactData list in Ascending, order by RequestDate
+          //       _filteredData.sort((d1, d2) {
+          //         if (d1['updateDate'] == "" || d2['updateDate'] == "") {
+          //           return 0;
+          //         } else {
+          //           DateFormat format = DateFormat("dd/MM/yyy");
+          //           DateTime date1 = format.parse(d1['updateDate']);
+          //           DateTime date2 = format.parse(d2['updateDate']);
+          //           return date2.compareTo(date1);
+          //         }
+          //       });
+          //     }
+          //     dataObject =
+          //         HandleTableCurrency(data: _filteredData, callback: fetchData);
+          //   },
+          // );
+        },
+      ),
+
+      //Actions column
+      DataColumn(
+        label: Container(
+          width: 150,
+          alignment: Alignment.center,
+          child: Text(
+            'Actions',
+          ),
+        ),
+      ),
+    ];
+    return columns;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +199,81 @@ class _dashboardState extends State<Dashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SideBar(handlerForManageContent: () {}),
-          const Expanded(
+          Expanded(
             child: Scaffold(
               appBar: CustomAppBar(),
-              body: SingleChildScrollView(child: Text("hello")),
+              body: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 30,
+                        left: 30,
+                        right: 30,
+                      ),
+                      width: .2.sw,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "filter table here...",
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFFBEBEBE),
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            filterValue = value;
+                          });
+                          setState(() {
+                            _filteredData = _data.where((element) {
+                              return element['name']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase());
+                            }).toList();
+                          });
+                          if (value.isEmpty) {
+                            setState(() {
+                              _filteredData = _data;
+                            });
+                          }
+                          dataObject = HandleTableCurrency(
+                            data: _filteredData,
+                            callback: fetchData,
+                          );
+                        },
+                      ),
+                    ),
+                    //Table listing the request contact
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        cardColor: Colors.grey.shade200,
+                      ),
+                      child: Container(
+                        width: 1.sw,
+                        padding: EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 20,
+                        ),
+                        child: PaginatedDataTable(
+                          source: dataObject,
+                          columns: getColumns(),
+                          sortColumnIndex: _currentSortColumn,
+                          sortAscending: _isAscending,
+                          columnSpacing: 0,
+                          showCheckboxColumn: true,
+                          rowsPerPage: 7,
+                          showFirstLastButtons: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           )
         ],

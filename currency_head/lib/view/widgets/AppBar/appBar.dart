@@ -16,7 +16,7 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  LoginController _loginController = Get.put(LoginController());
+  final LoginController _loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return AppBar(

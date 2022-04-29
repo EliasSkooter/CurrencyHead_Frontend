@@ -43,9 +43,6 @@ class _SideBarState extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loginController.userInfo['username'] == null) {
-      return Container();
-    }
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -63,15 +60,20 @@ class _SideBarState extends State<SideBar> {
                     -1, //this property is responsible for vertical aligment of rail items
                 leading: Padding(
                   padding: EdgeInsets.only(top: 0.1.sh),
-                  child: Text(
-                      _loginController.userInfo['name'] +
-                          ' ' +
-                          _loginController.userInfo['surname'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      )),
+                  child: Obx(
+                    () => (_loginController.userInfo.isNotEmpty)
+                        ? Text(
+                            _loginController.userInfo['name'] +
+                                ' ' +
+                                _loginController.userInfo['surname'],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          )
+                        : Text(""),
+                  ),
                 ),
                 onDestinationSelected: (index) {
                   // updating selected rail item onPress
@@ -82,7 +84,7 @@ class _SideBarState extends State<SideBar> {
                   NavigationRailDestination(
                     icon: IconButton(
                       onPressed: () {
-                        Get.toNamed('/Login');
+                        Get.toNamed('/Dashboard');
                       },
                       icon: const Icon(
                         Icons.dashboard_outlined,
@@ -91,7 +93,7 @@ class _SideBarState extends State<SideBar> {
                     ),
                     label: TextButton(
                       onPressed: () {
-                        Get.toNamed('/Login');
+                        Get.toNamed('/Market');
                       },
                       child: const Text(
                         'HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO',

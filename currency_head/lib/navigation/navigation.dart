@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:currency_head/view/screens/Currency/Currency.dart';
 import 'package:currency_head/view/screens/Login/login.dart';
 import 'package:currency_head/view/screens/SignUp/signup.dart';
 import 'package:currency_head/view/screens/dashboard/dashboard.dart';
@@ -11,7 +12,8 @@ class Navigation {
     GetPage(name: '/Home', page: () => HomeScreen()),
     GetPage(name: '/SignUp', page: () => SignUp()),
     GetPage(name: '/Login', page: () => LoginScreen()),
-    GetPage(name: '/Dashboard', page: () => Dashboard())
+    GetPage(name: '/Dashboard', page: () => Dashboard()),
+    GetPage(name: '/Currency', page: () => Currency())
   ];
   List<GetPage<dynamic>> getNavigationList() {
     return routes;

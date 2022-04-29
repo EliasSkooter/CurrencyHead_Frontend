@@ -17,7 +17,6 @@ Future<bool> login(String email, String password) async {
     "email": email,
     "password": password,
   };
-  print("ZABRE $loginDetails");
   dynamic response = await http.post(Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
