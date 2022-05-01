@@ -121,7 +121,6 @@ class _dashboardState extends State<Dashboard> {
               _currentSortColumn = columnIndex;
               if (_isAscending == true) {
                 _isAscending = false;
-                // sort the _requestContactData list in Ascending, order by email
                 _filteredData.sort((productA, productB) {
                   if (productA.name != null && productB.name != null) {
                     return productB.name.compareTo(productA.name);
@@ -130,7 +129,6 @@ class _dashboardState extends State<Dashboard> {
                 });
               } else {
                 _isAscending = true;
-                // sort the _requestContactData list in Ascending, order by email
                 _filteredData.sort((productA, productB) {
                   if (productA.name != null && productB.name != null) {
                     return productA.name.compareTo(productB.name);
@@ -163,12 +161,10 @@ class _dashboardState extends State<Dashboard> {
               _currentSortColumn = columnIndex;
               if (_isAscending == true) {
                 _isAscending = false;
-                // sort the _requestContactData list in Ascending, order by email
                 _filteredData.sort((productA, productB) =>
                     productB.value.compareTo(productA.value));
               } else {
                 _isAscending = true;
-                // sort the _requestContactData list in Ascending, order by email
                 _filteredData.sort((productA, productB) =>
                     productA.value.compareTo(productB.value));
               }
@@ -197,7 +193,6 @@ class _dashboardState extends State<Dashboard> {
         //     _currentSortColumn = columnIndex;
         //     if (_isAscending == true) {
         //       _isAscending = false;
-        //       // sort the _requestContactData list in Ascending, order by RequestDate
         //       _filteredData.sort((d1, d2) {
         //         if (d1['updateDate'] == "" || d2['updateDate'] == "") {
         //           return 0;

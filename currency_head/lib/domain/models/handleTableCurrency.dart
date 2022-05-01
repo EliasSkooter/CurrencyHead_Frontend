@@ -1,11 +1,16 @@
+import 'package:currency_head/domain/controllers/loginController.dart';
 import 'package:currency_head/domain/models/currencyModel.dart';
+import 'package:currency_head/services/apiService.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HandleTableCurrency extends DataTableSource {
   //This list is for the new users data
   List<CurrencyModel> data = [];
   Function callback;
   Function callBackGraph;
+
+  final LoginController loginController = Get.put(LoginController());
 
   // CurrencyController controller = Get.put(CurrencyController());
 
@@ -28,14 +33,23 @@ class HandleTableCurrency extends DataTableSource {
   //   downloadFile(selectedCurrency['reference']);
   // }
 
-  // void handleDelete(int id) async {
-  //   genericDelete('Currency', id).then((value) {
-  //     print("successfully deleted Currency... $value");
-  //     callback();
-  //   }).catchError((onError) {
-  //     print("failed to delete Currency... $onError");
-  //   });
-  // }
+  void setFavorite(String currencyName) async {
+    postFavoriteCurrency(loginController.userInfo['username'], currencyName);
+  }
+
+  void removeFavorite(String currencyName) async {
+    removeFavoriteCurrency(loginController.userInfo['username'], currencyName);
+  }
+
+  bool checkIsFavorite(String currency) {
+    bool isFavorite = false;
+    for (String currencyId in loginController.userInfo['currencies']) {
+      if (currencyId == currency) {
+        isFavorite = true;
+      }
+    }
+    return isFavorite;
+  }
 
   @override
   //This function is responsible of filling the rows of the Data table
@@ -92,17 +106,22 @@ class HandleTableCurrency extends DataTableSource {
               color: Colors.grey,
               iconSize: 18,
             ),
-            IconButton(
-              onPressed: () {
-                // handleDelete(data[index]['id']);
-              },
-              icon: const Icon(
-                Icons.delete_forever,
-                textDirection: TextDirection.rtl,
+            Obx(
+              () => IconButton(
+                onPressed: () {
+                  checkIsFavorite(data[index].id)
+                      ? removeFavorite(data[index].name)
+                      : setFavorite(data[index].name);
+                },
+                icon: Icon(
+                  Icons.favorite,
+                  textDirection: TextDirection.rtl,
+                ),
+                color:
+                    checkIsFavorite(data[index].id) ? Colors.red : Colors.grey,
+                iconSize: 18,
+                padding: EdgeInsets.all(0),
               ),
-              color: Colors.grey,
-              iconSize: 18,
-              padding: EdgeInsets.all(0),
             ),
             IconButton(
               onPressed: () {

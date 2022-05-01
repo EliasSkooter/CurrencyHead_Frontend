@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, file_names
-
 import 'dart:convert';
 import 'package:currency_head/constants/IP.dart';
 import 'package:currency_head/domain/controllers/loginController.dart';
@@ -22,7 +20,6 @@ Future<bool> login(String email, String password) async {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(loginDetails));
-  print("response =====> ${response.body}");
   try {
     dynamic res = jsonDecode(response.body);
     LogedUser logedUser = LogedUser(
@@ -31,6 +28,7 @@ Future<bool> login(String email, String password) async {
         username: res['email'],
         accessToken: res['token'],
         currencies: res['currencies']);
+    print("loged user ===> $logedUser");
     _loginController.setCurrentUserInfo(logedUser);
     return true;
   } catch (e) {
@@ -54,8 +52,6 @@ Future<dynamic> register(
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(registrationDetails));
-
-  print("response =====> ${response.body}");
 
   try {
     dynamic data = jsonDecode(response.body);
