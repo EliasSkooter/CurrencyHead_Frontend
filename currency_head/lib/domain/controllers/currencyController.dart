@@ -18,7 +18,6 @@ class CurrencyController extends GetxController {
     try {
       List returnedCurrencies = jsonDecode(response.body);
       setCurrencies(returnedCurrencies);
-      print("currencies... $returnedCurrencies");
       return returnedCurrencies;
     } catch (e) {
       print("failed to retrieve currencies... $e");

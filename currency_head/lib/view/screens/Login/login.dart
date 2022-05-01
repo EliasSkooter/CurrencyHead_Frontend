@@ -201,6 +201,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 }
                               },
+                              onFieldSubmitted: (val) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                loginFunct(username, password);
+                              },
                             ),
                           ),
                         ],

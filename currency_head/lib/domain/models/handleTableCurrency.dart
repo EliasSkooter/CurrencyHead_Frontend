@@ -1,10 +1,11 @@
+import 'package:currency_head/domain/models/currencyModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HandleTableCurrency extends DataTableSource {
   //This list is for the new users data
-  List<dynamic> data = [];
+  List<CurrencyModel> data = [];
   Function callback;
+  Function callBackGraph;
 
   // CurrencyController controller = Get.put(CurrencyController());
 
@@ -12,16 +13,13 @@ class HandleTableCurrency extends DataTableSource {
   HandleTableCurrency({
     required this.data,
     required this.callback,
+    required this.callBackGraph,
   });
 
   // funciton that will be called when the eye icon is clicked
-  // void handleNavigation(int id) async {
-  //   dynamic selectedCurrency =
-  //       data.firstWhere((element) => element['id'] == id);
-  //   controller.setCurrentCurrency(selectedCurrency, false);
-  //   print('selected currency: $selectedCurrency');
-  //   await Get.toNamed('/SingleCurrency');
-  // }
+  void handleGraphCurrency(String id) async {
+    callBackGraph(id);
+  }
 
   // funciton that will be called when the eye icon is clicked
   // void handlePrint(int id) async {
@@ -50,7 +48,7 @@ class HandleTableCurrency extends DataTableSource {
             alignment: Alignment.center,
             width: 150,
             child: Text(
-              data[index]!['name'] ?? "",
+              data[index].name ?? "",
               textAlign: TextAlign.center,
             ),
           ),
@@ -62,7 +60,7 @@ class HandleTableCurrency extends DataTableSource {
             alignment: Alignment.center,
             width: 150,
             child: Text(
-              (data[index]!['value'] as num).toStringAsFixed(3),
+              (data[index].value as num).toStringAsFixed(4),
               textAlign: TextAlign.center,
             ),
           ),
@@ -74,9 +72,9 @@ class HandleTableCurrency extends DataTableSource {
             alignment: Alignment.center,
             width: 150,
             child: Text(
-              data[index]!['updateDate'].toString().substring(0, 10) +
+              data[index].updateDate.toString().substring(0, 10) +
                   " " +
-                  data[index]!['updateDate'].toString().substring(11, 19),
+                  data[index].updateDate.toString().substring(11, 19),
               textAlign: TextAlign.center,
             ),
           ),
@@ -88,7 +86,7 @@ class HandleTableCurrency extends DataTableSource {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                // handleNavigation(data[index]['id']);
+                handleGraphCurrency(data[index].id.toString());
               },
               icon: const Icon(Icons.remove_red_eye_outlined),
               color: Colors.grey,

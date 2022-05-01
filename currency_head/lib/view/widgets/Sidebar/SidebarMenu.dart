@@ -43,92 +43,90 @@ class _SideBarState extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IntrinsicHeight(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 1.sh),
-              child: NavigationRail(
-                backgroundColor: Colors.blue.shade800,
-                extended: false,
-                selectedIconTheme:
-                    IconThemeData(color: Colors.grey[500], size: 20),
-                groupAlignment:
-                    -1, //this property is responsible for vertical aligment of rail items
-                leading: Padding(
-                  padding: EdgeInsets.only(top: 0.1.sh),
-                  child: Obx(
-                    () => (_loginController.userInfo.isNotEmpty)
-                        ? Text(
-                            _loginController.userInfo['name'] +
-                                ' ' +
-                                _loginController.userInfo['surname'],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          )
-                        : Text(""),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IntrinsicHeight(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 1.sh),
+            child: NavigationRail(
+              backgroundColor: Colors.blue.shade800,
+              extended: false,
+              selectedIconTheme:
+                  IconThemeData(color: Colors.grey[500], size: 20),
+              groupAlignment:
+                  -1, //this property is responsible for vertical aligment of rail items
+              leading: Padding(
+                padding: EdgeInsets.only(top: 0.1.sh),
+                child: Obx(
+                  () => (_loginController.userInfo.isNotEmpty)
+                      ? Text(
+                          _loginController.userInfo['name'] +
+                              ' ' +
+                              _loginController.userInfo['surname'],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        )
+                      : Text(""),
+                ),
+              ),
+              onDestinationSelected: (index) {
+                // updating selected rail item onPress
+                _onDestinationSelected(index);
+              },
+              destinations: [
+                //Dashboard nav
+                NavigationRailDestination(
+                  icon: IconButton(
+                    onPressed: () {
+                      Get.toNamed('/Dashboard');
+                    },
+                    icon: const Icon(
+                      Icons.dashboard_outlined,
+                      color: Colors.white,
+                    ),
+                  ),
+                  label: TextButton(
+                    onPressed: () {
+                      Get.toNamed('/Market');
+                    },
+                    child: const Text(
+                      'HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-                onDestinationSelected: (index) {
-                  // updating selected rail item onPress
-                  _onDestinationSelected(index);
-                },
-                destinations: [
-                  //Dashboard nav
-                  NavigationRailDestination(
-                    icon: IconButton(
-                      onPressed: () {
-                        Get.toNamed('/Dashboard');
-                      },
-                      icon: const Icon(
-                        Icons.dashboard_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    label: TextButton(
-                      onPressed: () {
-                        Get.toNamed('/Market');
-                      },
-                      child: const Text(
-                        'HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                //Dashboard nav
+                NavigationRailDestination(
+                  icon: IconButton(
+                    onPressed: () {
+                      Get.toNamed('/Login');
+                    },
+                    icon: const Icon(
+                      Icons.dashboard_outlined,
+                      color: Colors.white,
                     ),
                   ),
-                  //Dashboard nav
-                  NavigationRailDestination(
-                    icon: IconButton(
-                      onPressed: () {
-                        Get.toNamed('/Login');
-                      },
-                      icon: const Icon(
-                        Icons.dashboard_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    label: TextButton(
-                      onPressed: () {
-                        Get.toNamed('/Login');
-                      },
-                      child: const Text(
-                        'desktopMenu.sidebar.dashboard',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                  label: TextButton(
+                    onPressed: () {
+                      Get.toNamed('/Login');
+                    },
+                    child: const Text(
+                      'desktopMenu.sidebar.dashboard',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                ],
-                selectedIndex: selectedIndex,
-              ),
+                ),
+              ],
+              selectedIndex: selectedIndex,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
