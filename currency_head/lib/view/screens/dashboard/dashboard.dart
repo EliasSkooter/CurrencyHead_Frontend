@@ -1,8 +1,5 @@
-// ignore_for_file: camel_case_types
-
-import 'dart:convert';
-
 import 'package:currency_head/domain/controllers/currencyController.dart';
+import 'package:currency_head/domain/controllers/loginController.dart';
 import 'package:currency_head/domain/models/currencyHistoryModel.dart';
 import 'package:currency_head/domain/models/currencyModel.dart';
 import 'package:currency_head/domain/models/handleTableCurrency.dart';
@@ -13,16 +10,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
   @override
-  _dashboardState createState() => _dashboardState();
+  DashboardState createState() => DashboardState();
 }
 
-class _dashboardState extends State<Dashboard> {
+class DashboardState extends State<Dashboard> {
   List<CurrencyModel> _filteredData = [];
 
   List<CurrencyHistoryModel> graphData = [];
@@ -44,8 +40,9 @@ class _dashboardState extends State<Dashboard> {
   HandleTableCurrency dataObject =
       HandleTableCurrency(data: [], callback: () {}, callBackGraph: () {});
 
-  CurrencyController controller =
+  CurrencyController currencyController =
       Get.put(CurrencyController()..fetchCurrencies());
+  LoginController loginController = Get.put(LoginController());
 
   @override
   void initState() {
@@ -66,9 +63,19 @@ class _dashboardState extends State<Dashboard> {
     });
   }
 
+  bool checkIsFavorite(String id) {
+    bool isFavorite = false;
+    for (String currencyId in loginController.userInfo['currencies']) {
+      if (currencyId == id) {
+        isFavorite = true;
+      }
+    }
+    return isFavorite;
+  }
+
   void fetchData() {
     print("innn fetching data");
-    controller.fetchCurrencies().then((value) {
+    currencyController.fetchCurrencies().then((value) {
       List<CurrencyModel> listCurrencyModel = [];
       for (dynamic item in value) {
         List<CurrencyHistoryModel> tempListCurrencyHistoryModel = [];
@@ -161,12 +168,16 @@ class _dashboardState extends State<Dashboard> {
               _currentSortColumn = columnIndex;
               if (_isAscending == true) {
                 _isAscending = false;
-                _filteredData.sort((productA, productB) =>
-                    productB.value.compareTo(productA.value));
+                _filteredData.sort(
+                  (productA, productB) =>
+                      productB.value.compareTo(productA.value),
+                );
               } else {
                 _isAscending = true;
-                _filteredData.sort((productA, productB) =>
-                    productA.value.compareTo(productB.value));
+                _filteredData.sort(
+                  (productA, productB) =>
+                      productA.value.compareTo(productB.value),
+                );
               }
               dataObject = HandleTableCurrency(
                 data: _filteredData,
@@ -187,41 +198,6 @@ class _dashboardState extends State<Dashboard> {
             "Last Update Date",
           ),
         ),
-        // onSort: (columnIndex, _) {
-        // setState(
-        //   () {
-        //     _currentSortColumn = columnIndex;
-        //     if (_isAscending == true) {
-        //       _isAscending = false;
-        //       _filteredData.sort((d1, d2) {
-        //         if (d1['updateDate'] == "" || d2['updateDate'] == "") {
-        //           return 0;
-        //         } else {
-        //           DateFormat format = DateFormat("dd/MM/yyy");
-        //           DateTime date1 = format.parse(d1['updateDate']);
-        //           DateTime date2 = format.parse(d2['updateDate']);
-        //           return date1.compareTo(date2);
-        //         }
-        //       });
-        //     } else {
-        //       _isAscending = true;
-        //       // sort the _requestContactData list in Ascending, order by RequestDate
-        //       _filteredData.sort((d1, d2) {
-        //         if (d1['updateDate'] == "" || d2['updateDate'] == "") {
-        //           return 0;
-        //         } else {
-        //           DateFormat format = DateFormat("dd/MM/yyy");
-        //           DateTime date1 = format.parse(d1['updateDate']);
-        //           DateTime date2 = format.parse(d2['updateDate']);
-        //           return date2.compareTo(date1);
-        //         }
-        //       });
-        //     }
-        //     dataObject =
-        //         HandleTableCurrency(data: _filteredData, callback: fetchData);
-        //   },
-        // );
-        // },
       ),
 
       //Actions column
@@ -233,6 +209,30 @@ class _dashboardState extends State<Dashboard> {
             'Actions',
           ),
         ),
+        onSort: (columnIndex, _) {
+          setState(
+            () {
+              _currentSortColumn = columnIndex;
+              if (_isAscending == true) {
+                _isAscending = false;
+                _filteredData.sort((productA, productB) {
+                  bool favoriteAbool = checkIsFavorite(productA.id);
+                  bool favoriteBbool = checkIsFavorite(productB.id);
+
+                  if (favoriteAbool && !favoriteBbool) {
+                    return -1;
+                  }
+                  return 0;
+                });
+              }
+              dataObject = HandleTableCurrency(
+                data: _filteredData,
+                callback: fetchData,
+                callBackGraph: changeGraphCurrency,
+              );
+            },
+          );
+        },
       ),
     ];
     return columns;

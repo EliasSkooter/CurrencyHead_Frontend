@@ -39,9 +39,9 @@ class CurrencyHistoryModel {
 
   @override
   String toString() {
-    return 'Ceated history Model ===>\n' +
-        'id: $id\n' +
-        'value: $value\n' +
+    return 'Ceated history Model ===>\n'
+        'id: $id\n'
+        'value: $value\n'
         'date: $date\n';
   }
 

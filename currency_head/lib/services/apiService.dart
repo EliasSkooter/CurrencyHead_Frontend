@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:currency_head/constants/IP.dart';
 import 'package:currency_head/domain/controllers/loginController.dart';
-import 'package:currency_head/domain/entities/LogedUser.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 

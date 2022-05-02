@@ -56,12 +56,12 @@ class CurrencyModel {
 
   @override
   String toString() {
-    return 'Ceated currency Model ===>\n' +
-        'id: $id\n' +
-        'name: $name\n' +
-        'value: $value\n' +
-        'updateDate: $updateDate\n' +
-        'fluctuation: $fluctuation\n' +
+    return 'Ceated currency Model ===>\n'
+        'id: $id\n'
+        'name: $name\n'
+        'value: $value\n'
+        'updateDate: $updateDate\n'
+        'fluctuation: $fluctuation\n'
         'history: $history\n';
   }
 
