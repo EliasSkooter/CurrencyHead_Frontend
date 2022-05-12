@@ -17,7 +17,7 @@ class _CurrencyState extends State<Currency> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SideBar(handlerForManageContent: () {}),
+          SideBar(),
           const Expanded(
             child: Scaffold(
               appBar: CustomAppBar(),

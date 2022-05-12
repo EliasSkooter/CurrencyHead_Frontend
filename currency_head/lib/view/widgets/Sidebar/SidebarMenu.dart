@@ -3,23 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-/// IMPORTANT NOTE!!!!
-///
-/// WHEN USING SIDEBAR MAKE SURE TO INCLUDE: handlerForManageContent: (useless) {},
-///
-/// Otherwise you will get a null error or an argument error!
 class SideBar extends StatefulWidget {
   final dynamic controller;
-  final Function handlerForManageContent;
-
-  /// IMPORTANT NOTE!!!!
-  ///
-  /// WHEN USING SIDEBAR MAKE SURE TO INCLUDE: handlerForManageContent: (useless) {},
-  ///
-  /// Otherwise you will get a null error or an argument error!
   const SideBar({
     Key? key,
-    required this.handlerForManageContent,
     this.controller,
   }) : super(key: key);
   @override
@@ -92,7 +79,7 @@ class _SideBarState extends State<SideBar> {
                   ),
                   label: TextButton(
                     onPressed: () {
-                      Get.toNamed('/Market');
+                      Get.toNamed('/Dashboard');
                     },
                     child: const Text(
                       'HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO',
@@ -104,20 +91,40 @@ class _SideBarState extends State<SideBar> {
                 NavigationRailDestination(
                   icon: IconButton(
                     onPressed: () {
-                      Get.toNamed('/Login');
+                      Get.toNamed('/Market');
                     },
                     icon: const Icon(
-                      Icons.dashboard_outlined,
+                      Icons.shopify,
                       color: Colors.white,
                     ),
                   ),
                   label: TextButton(
                     onPressed: () {
-                      Get.toNamed('/Login');
+                      Get.toNamed('/Market');
                     },
                     child: const Text(
                       'desktopMenu.sidebar.dashboard',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: IconButton(
+                    onPressed: () {
+                      Get.toNamed('/Home');
+                      _loginController.clearCurrentUser();
+                    },
+                    icon: const Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                    ),
+                  ),
+                  label: const Text(
+                    'desktopMenu.sidebar.dashboard',
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
                   ),
                 ),

@@ -244,7 +244,7 @@ class DashboardState extends State<Dashboard> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SideBar(handlerForManageContent: () {}),
+          SideBar(),
           Expanded(
             child: Scaffold(
               appBar: CustomAppBar(),
