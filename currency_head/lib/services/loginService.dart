@@ -27,7 +27,8 @@ Future<bool> login(String email, String password) async {
         surname: res['last_name'],
         username: res['email'],
         accessToken: res['token'],
-        currencies: res['currencies']);
+        currencies: res['currencies'],
+        currencyWallet: res['currencyWallet']);
     print("loged user ===> $logedUser");
     _loginController.setCurrentUserInfo(logedUser);
     return true;
@@ -37,8 +38,12 @@ Future<bool> login(String email, String password) async {
   }
 }
 
-Future<dynamic> register(
-    String firstName, String lastName, String email, String password) async {
+Future<dynamic> register({
+  required String firstName,
+  required String lastName,
+  required String email,
+  required String password,
+}) async {
   final Map registrationDetails = {
     "first_name": firstName,
     "last_name": lastName,
@@ -60,7 +65,8 @@ Future<dynamic> register(
         accessToken: data['token'],
         name: data['first_name'],
         surname: data['last_name'],
-        currencies: data['currencies']);
+        currencies: data['currencies'],
+        currencyWallet: data['currencyWallet']);
     _loginController.setCurrentUserInfo(logedUser);
     return true;
   } catch (e) {

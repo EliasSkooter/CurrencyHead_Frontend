@@ -29,8 +29,8 @@ class _SignUpState extends State<SignUp> {
   bool emailValid = true;
   bool passwordBool = true;
   bool doPasswordsMatch = true;
-  bool isPasswordHidden = false;
-  bool isConfirmPasswordHidden = false;
+  bool isPasswordHidden = true;
+  bool isConfirmPasswordHidden = true;
 
   bool validateAllFields() {
     bool valid = true;
@@ -74,7 +74,12 @@ class _SignUpState extends State<SignUp> {
   }
 
   void registerFunc(firstname, lastname, email, password) async {
-    register(firstname, lastname, email, password).then((res) {
+    register(
+            firstName: firstname,
+            lastName: lastname,
+            email: email,
+            password: password)
+        .then((res) {
       if (res) {
         print("Registartion successful... redirecting to dashboard");
         Get.toNamed('/Dashboard');
@@ -116,13 +121,30 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(50),
-              width: 1.sw - 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              margin: isLargeScreen(context)
+                  ? EdgeInsets.all(
+                      50,
+                    )
+                  : EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 10,
+                    ),
+              width: isLargeScreen(context) ? 1.sw - 100 : 1.sw,
+              child: Flex(
+                direction:
+                    isLargeScreen(context) ? Axis.horizontal : Axis.vertical,
+                mainAxisAlignment: isLargeScreen(context)
+                    ? MainAxisAlignment.spaceAround
+                    : MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: .45.sw,
+                  Container(
+                    margin: isLargeScreen(context)
+                        ? null
+                        : EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                    width: isLargeScreen(context) ? .45.sw : 1.sw,
                     child: Row(
                       children: [
                         SizedBox(
@@ -138,7 +160,6 @@ class _SignUpState extends State<SignUp> {
                         Container(
                           alignment: Alignment.center,
                           width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                          height: isMobileDevice() ? 200 : null,
                           child: TextFormField(
                             initialValue: firstName,
                             cursorColor: Colors.black,
@@ -178,24 +199,29 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: .45.sw,
+                  Container(
+                    margin: isLargeScreen(context)
+                        ? null
+                        : EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                    width: isLargeScreen(context) ? .45.sw : 1.sw,
                     child: Row(
                       children: [
                         SizedBox(
                           width: 100,
                           child: Text(
                             'Last name: ',
-                            style: presetTextThemes(context)
-                                .headline6
-                                ?.copyWith(
-                                    fontSize: 16, color: Colors.grey.shade800),
+                            style:
+                                presetTextThemes(context).headline6?.copyWith(
+                                      fontSize: 16,
+                                      color: Colors.grey.shade800,
+                                    ),
                           ),
                         ),
                         Container(
                           alignment: Alignment.center,
                           width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                          height: isMobileDevice() ? 50 : null,
                           child: TextFormField(
                             initialValue: lastName,
                             cursorColor: Colors.black,
@@ -234,18 +260,33 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.all(50),
-              width: 1.sw - 100,
-              child: Row(
+              margin: isLargeScreen(context)
+                  ? EdgeInsets.all(
+                      50,
+                    )
+                  : EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 10,
+                    ),
+              width: isLargeScreen(context) ? 1.sw - 100 : 1.sw,
+              child: Flex(
+                direction:
+                    isLargeScreen(context) ? Axis.horizontal : Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(
-                    width: .45.sw,
+                  Container(
+                    margin: isLargeScreen(context)
+                        ? null
+                        : EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                    width: isLargeScreen(context) ? .45.sw : 1.sw,
                     child: Row(
                       children: [
                         SizedBox(
@@ -261,7 +302,6 @@ class _SignUpState extends State<SignUp> {
                         Container(
                           alignment: Alignment.center,
                           width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                          height: isMobileDevice() ? 50 : null,
                           child: TextFormField(
                             initialValue: email,
                             cursorColor: Colors.black,
@@ -297,8 +337,13 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: .45.sw,
+                  Container(
+                    margin: isLargeScreen(context)
+                        ? null
+                        : EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                    width: isLargeScreen(context) ? .45.sw : 1.sw,
                     child: Row(
                       children: [
                         SizedBox(
@@ -315,7 +360,6 @@ class _SignUpState extends State<SignUp> {
                         Container(
                           alignment: Alignment.center,
                           width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                          height: isMobileDevice() ? 50 : null,
                           child: TextFormField(
                             obscureText: isPasswordHidden,
                             initialValue: password,
@@ -374,8 +418,17 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(50),
-              width: 1.sw - 100,
+              margin: isLargeScreen(context)
+                  ? EdgeInsets.all(
+                      50,
+                    )
+                  : EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 10,
+                      bottom: 30,
+                    ),
+              width: isLargeScreen(context) ? 1.sw - 100 : 1.sw,
               child: Row(
                 children: [
                   SizedBox(
@@ -390,7 +443,6 @@ class _SignUpState extends State<SignUp> {
                   Container(
                     alignment: Alignment.center,
                     width: isMobileDevice() ? 1.sw / 1.7 : 1.sw / 4,
-                    height: isMobileDevice() ? 50 : null,
                     child: TextFormField(
                       obscureText: isConfirmPasswordHidden,
                       initialValue: confirmPassword,
@@ -440,7 +492,9 @@ class _SignUpState extends State<SignUp> {
             Container(
               width: 1.sw,
               alignment: Alignment.center,
-              child: Row(
+              child: Flex(
+                direction:
+                    isLargeScreen(context) ? Axis.horizontal : Axis.vertical,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

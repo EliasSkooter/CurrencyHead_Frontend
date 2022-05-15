@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Positioned(
-              left: isMobileDevice() ? 20 : 1.sw / 2 - 40,
+              left: isMobileDevice() ? 1.sw / 2 : 1.sw / 2 - 40,
               top: 1.sh / 4,
               child: Text(
                 "Login",
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: isMobileDevice() ? 26 : null),
               )),
           Positioned(
-            left: isMobileDevice() ? null : 1.sw / 2,
+            left: isMobileDevice() ? -20 : 1.sw / 2,
             top: isMobileDevice() ? 1.sh / 2.5 : 1.sh / 2.5,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

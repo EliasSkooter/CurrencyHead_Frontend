@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:currency_head/domain/controllers/loginController.dart';
+import 'package:currency_head/utils/common.dart';
 import 'package:currency_head/view/widgets/CurrencyHeadButton/CurrencyHeadLogo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       leading: _loginController.userInfo['username'] != null
           ? Icon(Icons.account_circle_rounded)
           : null,
-      leadingWidth: 100,
+      leadingWidth: isLargeScreen(context) ? 100 : 50,
       title: CurrencyHeadTitle(
         showText: true,
         height: 50,

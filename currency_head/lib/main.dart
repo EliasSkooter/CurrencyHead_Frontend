@@ -1,4 +1,6 @@
+import 'package:currency_head/utils/common.dart';
 import 'package:currency_head/utils/themes.dart';
+import 'package:currency_head/view/screens/Login/login.dart';
 import 'package:currency_head/view/screens/homeScreen/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +23,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Currency Head',
         theme: defaultTheme(context),
-        home: Stack(children: [HomeScreen()]),
+        home: Stack(
+          children: [
+            isMobileDevice() ? LoginScreen() : HomeScreen(),
+          ],
+        ),
         getPages: Navigation().getNavigationList(),
       ),
     );

@@ -95,44 +95,41 @@ class HandleTableCurrency extends DataTableSource {
         ),
 
         //actions rows
-        DataCell(Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            IconButton(
-              onPressed: () {
-                handleGraphCurrency(data[index].id.toString());
-              },
-              icon: const Icon(Icons.remove_red_eye_outlined),
-              color: Colors.grey,
-              iconSize: 18,
-            ),
-            Obx(
-              () => IconButton(
+        DataCell(Container(
+          margin: EdgeInsets.only(
+            left: 30,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              IconButton(
                 onPressed: () {
-                  checkIsFavorite(data[index].id)
-                      ? removeFavorite(data[index].name)
-                      : setFavorite(data[index].name);
+                  handleGraphCurrency(data[index].id.toString());
                 },
-                icon: Icon(
-                  Icons.favorite,
-                  textDirection: TextDirection.rtl,
-                ),
-                color:
-                    checkIsFavorite(data[index].id) ? Colors.red : Colors.grey,
+                icon: const Icon(Icons.remove_red_eye_outlined),
+                color: Colors.grey,
                 iconSize: 18,
-                padding: EdgeInsets.all(0),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                // handlePrint(data[index]['id']);
-              },
-              icon: const Icon(Icons.download),
-              color: Colors.grey,
-              iconSize: 18,
-              padding: EdgeInsets.all(0),
-            )
-          ],
+              Obx(
+                () => IconButton(
+                  onPressed: () {
+                    checkIsFavorite(data[index].id)
+                        ? removeFavorite(data[index].name)
+                        : setFavorite(data[index].name);
+                  },
+                  icon: Icon(
+                    Icons.favorite,
+                    textDirection: TextDirection.rtl,
+                  ),
+                  color: checkIsFavorite(data[index].id)
+                      ? Colors.red
+                      : Colors.grey,
+                  iconSize: 18,
+                  padding: EdgeInsets.all(0),
+                ),
+              ),
+            ],
+          ),
         )),
       ],
     );

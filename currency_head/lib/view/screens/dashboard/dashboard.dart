@@ -3,6 +3,7 @@ import 'package:currency_head/domain/controllers/loginController.dart';
 import 'package:currency_head/domain/models/currencyHistoryModel.dart';
 import 'package:currency_head/domain/models/currencyModel.dart';
 import 'package:currency_head/domain/models/handleTableCurrency.dart';
+import 'package:currency_head/utils/common.dart';
 import 'package:currency_head/view/widgets/AppBar/appBar.dart';
 import 'package:currency_head/view/widgets/Sidebar/SidebarMenu.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +47,15 @@ class DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    fetchData();
     super.initState();
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    currencyController.dispose();
+    loginController.dispose();
   }
 
   void changeGraphCurrency(id) {
@@ -258,7 +266,7 @@ class DashboardState extends State<Dashboard> {
                         left: 30,
                         right: 30,
                       ),
-                      width: .2.sw,
+                      width: isLargeScreen(context) ? .2.sw : .8.sw,
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: "filter table here...",

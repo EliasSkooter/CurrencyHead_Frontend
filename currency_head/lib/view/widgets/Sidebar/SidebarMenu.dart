@@ -113,6 +113,23 @@ class _SideBarState extends State<SideBar> {
                 NavigationRailDestination(
                   icon: IconButton(
                     onPressed: () {
+                      Get.toNamed('/Settings');
+                    },
+                    icon: const Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                  ),
+                  label: Text(
+                    'Settings',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: IconButton(
+                    onPressed: () {
                       Get.toNamed('/Home');
                       _loginController.clearCurrentUser();
                     },

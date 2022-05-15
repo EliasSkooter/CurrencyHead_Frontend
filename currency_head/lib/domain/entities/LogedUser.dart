@@ -4,6 +4,7 @@ class LogedUser {
   late final String name;
   late final String surname;
   late final List currencies;
+  late final List currencyWallet;
 
   LogedUser({
     required this.username,
@@ -11,6 +12,7 @@ class LogedUser {
     required this.name,
     required this.surname,
     required this.currencies,
+    required this.currencyWallet,
   });
 
   LogedUser.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class LogedUser {
     name = json['name'];
     surname = json['surname'];
     currencies = json['currencies'];
+    currencyWallet = json['currencyWallet'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,23 +31,24 @@ class LogedUser {
     data['name'] = name;
     data['surname'] = surname;
     data['currencies'] = currencies;
+    data['currencyWallet'] = currencyWallet;
     return data;
   }
 
-  LogedUser copyWith({
-    String? username,
-    String? accessToken,
-    String? name,
-    String? surname,
-    List? currencies,
-  }) {
+  LogedUser copyWith(
+      {String? username,
+      String? accessToken,
+      String? name,
+      String? surname,
+      List? currencies,
+      List? currencyWallet}) {
     return LogedUser(
-      username: username ?? this.username,
-      accessToken: accessToken ?? this.accessToken,
-      name: name ?? this.name,
-      surname: surname ?? this.surname,
-      currencies: currencies ?? this.currencies,
-    );
+        username: username ?? this.username,
+        accessToken: accessToken ?? this.accessToken,
+        name: name ?? this.name,
+        surname: surname ?? this.surname,
+        currencies: currencies ?? this.currencies,
+        currencyWallet: currencyWallet ?? this.currencyWallet);
   }
 
   @override

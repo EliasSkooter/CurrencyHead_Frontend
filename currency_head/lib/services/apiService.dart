@@ -51,3 +51,21 @@ void removeFavoriteCurrency(String userEmail, String currencyName) {
     print("Failed to add favorite currency... $onError");
   });
 }
+
+Future<dynamic> addNewCurrencyWallet(
+    String email, String currencyName, int amount) async {
+  Map body = {
+    "email": email,
+    "name": currencyName,
+    "amount": amount,
+  };
+
+  final url = getIP() + "addCurrencyAmount";
+  dynamic response = await http.post(Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(body));
+
+  return response.body;
+}

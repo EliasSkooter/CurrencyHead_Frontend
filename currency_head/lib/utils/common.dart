@@ -35,6 +35,11 @@ bool isIOS() {
   return Platform.isIOS;
 }
 
+String showNumberWithCommas(dynamic price) {
+  return price.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+}
+
 // isLargeScreen(context) returns true if screen width >= 600
 // it automatically adapts to orientation
 bool isLargeScreen(context) => MediaQuery.of(context).size.width >= 600;
