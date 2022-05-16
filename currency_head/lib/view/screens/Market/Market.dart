@@ -660,7 +660,10 @@ class MarketState extends State<Market> {
                     ),
                     Container(
                       margin: EdgeInsets.all(50),
-                      child: Row(
+                      child: Flex(
+                        direction: isLargeScreen(context)
+                            ? Axis.horizontal
+                            : Axis.vertical,
                         children: [
                           Text(
                             "Add a new currency Exchange: ",
@@ -699,10 +702,13 @@ class MarketState extends State<Market> {
                                       bottom: 20,
                                     ),
                               width: isLargeScreen(context) ? .45.sw : 1.sw,
-                              child: Row(
+                              child: Flex(
+                                direction: isLargeScreen(context)
+                                    ? Axis.horizontal
+                                    : Axis.vertical,
                                 children: [
                                   SizedBox(
-                                    width: 100,
+                                    width: isLargeScreen(context) ? 100 : 200,
                                     child: Text(
                                       'Currency name: ',
                                       style: presetTextThemes(context)
@@ -745,9 +751,16 @@ class MarketState extends State<Market> {
                                       bottom: 20,
                                     ),
                               width: isLargeScreen(context) ? .45.sw : 1.sw,
-                              child: Row(
+                              child: Flex(
+                                direction: isLargeScreen(context)
+                                    ? Axis.horizontal
+                                    : Axis.vertical,
                                 children: [
-                                  SizedBox(
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 20,
+                                      bottom: 10,
+                                    ),
                                     width: 100,
                                     child: Text(
                                       'amount: ',
@@ -825,17 +838,21 @@ class MarketState extends State<Market> {
                                       bottom: 20,
                                     ),
                               width: isLargeScreen(context) ? .45.sw : 1.sw,
-                              child: Row(
+                              child: Flex(
+                                direction: isLargeScreen(context)
+                                    ? Axis.horizontal
+                                    : Axis.vertical,
                                 children: [
                                   SizedBox(
-                                    width: 100,
+                                    width: isLargeScreen(context) ? 100 : 200,
                                     child: Text(
                                       'Allowed currencies: ',
                                       style: presetTextThemes(context)
                                           .headline6
                                           ?.copyWith(
-                                              fontSize: 16,
-                                              color: Colors.grey.shade800),
+                                            fontSize: 16,
+                                            color: Colors.grey.shade800,
+                                          ),
                                     ),
                                   ),
                                   Container(

@@ -76,31 +76,39 @@ class SettingsState extends State<Settings> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: 10,
-                              bottom: 50,
-                            ),
-                            child: Text(
-                              "Join the beta today by adding currencies here!",
-                              style: presetTextThemes(context).headline2,
-                            ),
-                          ),
-                        ],
+                      Container(
+                        width: isLargeScreen(context) ? .6.sw : null,
+                        margin: EdgeInsets.only(
+                          top: 10,
+                          bottom: 50,
+                        ),
+                        child: Text(
+                          "Join the beta today by adding currencies here!",
+                          style: presetTextThemes(context).headline2,
+                          softWrap: true,
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
                           top: 50,
                           bottom: 50,
                         ),
-                        child: Row(
+                        child: Flex(
+                          direction: isLargeScreen(context)
+                              ? Axis.horizontal
+                              : Axis.vertical,
                           children: [
                             SizedBox(
                               width: 150,
-                              child: Text("Pick a currency: "),
+                              child: Text(
+                                "Pick a currency: ",
+                                style: presetTextThemes(context)
+                                    .headline6
+                                    ?.copyWith(
+                                      fontSize: 16,
+                                      color: Colors.grey.shade800,
+                                    ),
+                              ),
                             ),
                             Container(
                               alignment: Alignment.center,
@@ -128,11 +136,21 @@ class SettingsState extends State<Settings> {
                           ],
                         ),
                       ),
-                      Row(
+                      Flex(
+                        direction: isLargeScreen(context)
+                            ? Axis.horizontal
+                            : Axis.vertical,
                         children: [
                           SizedBox(
                             width: 150,
-                            child: Text("Pick an amount: "),
+                            child: Text(
+                              "Pick an amount: ",
+                              style:
+                                  presetTextThemes(context).headline6?.copyWith(
+                                        fontSize: 16,
+                                        color: Colors.grey.shade800,
+                                      ),
+                            ),
                           ),
                           Container(
                             alignment: Alignment.center,
