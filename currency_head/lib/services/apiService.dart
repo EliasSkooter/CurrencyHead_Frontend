@@ -67,5 +67,5 @@ Future<dynamic> addNewCurrencyWallet(
       },
       body: jsonEncode(body));
 
-  return response.body;
+  return response;
 }

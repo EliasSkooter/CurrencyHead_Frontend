@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:currency_head/domain/controllers/currencyController.dart';
 import 'package:currency_head/domain/controllers/loginController.dart';
 import 'package:currency_head/services/apiService.dart';
@@ -30,6 +32,8 @@ class SettingsState extends State<Settings> {
 
   LoginController loginController = Get.put(LoginController());
 
+  List<Widget> userWallet = [];
+
   @override
   void initState() {
     super.initState();
@@ -54,10 +58,32 @@ class SettingsState extends State<Settings> {
       newCurrName,
       newCurrAmount,
     ).then((value) {
+      dynamic result = jsonDecode(value.body);
+      print("valueee ====>  ${result['currencyWallet']}");
+      loginController.userInfo['currencyWallet'] = result['currencyWallet'];
+
       setState(() {
         success = true;
       });
     });
+  }
+
+  List<Widget> buildWallet() {
+    List<Widget> temp = [];
+    for (dynamic walletEntry in loginController.userInfo['currencyWallet']) {
+      for (dynamic currency in currencyController.currencies) {
+        if (walletEntry['currency'] == currency['_id']) {
+          temp.add(Container(
+            margin: EdgeInsets.all(30),
+            child: Text(
+              "You have ${walletEntry['amount']} ${currency['name']}",
+              style: presetTextThemes(context).headline6,
+            ),
+          ));
+        }
+      }
+    }
+    return temp;
   }
 
   @override
@@ -212,6 +238,19 @@ class SettingsState extends State<Settings> {
                                 color: PRIMARY_COLOR,
                               ),
                         ),
+                      Text(
+                        "Your wallet",
+                        style: presetTextThemes(context).headline2,
+                      ),
+                      Obx(
+                        () => Column(
+                          children: [
+                            if (loginController.userInfo['currencyWallet'] !=
+                                null)
+                              for (Widget widget in buildWallet()) widget
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

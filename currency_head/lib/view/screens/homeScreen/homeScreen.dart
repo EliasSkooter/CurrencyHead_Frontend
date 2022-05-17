@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Text(
-                "Welcome to Currency Head!",
+                "Welcome to CurrencyHead!",
                 textAlign: TextAlign.center,
                 style: presetTextThemes(context)
                     .headline1
